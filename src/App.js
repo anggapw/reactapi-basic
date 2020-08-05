@@ -3,7 +3,7 @@ import axios from 'axios';
 import './App.css';
 
 const App = () => {
-  const [news, setNews] = useState([]);
+  const [giphy, setGiphy] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
@@ -23,11 +23,11 @@ const App = () => {
   // }, []);
 
   useEffect(() => {
-    const url = 'https://newsapi.org/v2/top-headlines?country=id&apiKey=232e35216b3f4470a1b0e848f29d4dd8&pageSize=12';
+    const url = 'https://api.giphy.com/v1/gifs/trending?limit=8&api_key=vGpl09dcUxSBKgbrfL2xdAOjPXp1vZMo';
     axios.get(url)
       .then(function (result) {
-        // console.log(result.data.articles);
-        setNews(result.data.articles);
+        console.log(result.data.data);
+        setGiphy(result.data.data);
         setLoading(false);
       })
       .catch(function (error) {
@@ -40,7 +40,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <h2>Call News API</h2>
+      <h2>Call Trending Giphy API</h2>
       <div className="CardContainer">
         {loading ? (
           <div className="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
@@ -48,10 +48,10 @@ const App = () => {
             error ? (
               <div>{errorMessage}</div>
             ) : (
-                news.map((item) => (
-                  <div className="Card" key={item.title}>
+                giphy.map((item) => (
+                  <div className="Card" key={item.id}>
                     <div className="CardImage">
-                      <img src={item.urlToImage} alt="news" />
+                      <img src={item.images.downsized_large.url} alt="giphy" />
                     </div>
                     <div className="CardTitle">
                       <h4>{item.title}</h4>
@@ -60,7 +60,7 @@ const App = () => {
                       <p>{item.description}</p>
                     </div>
                     <div className="CardLink">
-                      <i className="far fa-eye" style={{color: "#fff"}}></i><a href={item.url} target="_blank" rel="noopener noreferrer">Read Article</a>
+                      <i className="far fa-eye" style={{color: "#fff"}}></i><a href={item.bitly_url} target="_blank" rel="noopener noreferrer">Read Article</a>
                     </div>
                   </div>
                 ))
