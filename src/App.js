@@ -23,7 +23,7 @@ const App = () => {
   // }, []);
 
   useEffect(() => {
-    const url = 'http://newsapi.org/v2/top-headlines?country=id&apiKey=232e35216b3f4470a1b0e848f29d4dd8&pageSize=12';
+    const url = 'https://newsapi.org/v2/top-headlines?country=id&apiKey=232e35216b3f4470a1b0e848f29d4dd8&pageSize=12';
     axios.get(url)
       .then(function (result) {
         // console.log(result.data.articles);
